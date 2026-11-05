@@ -2,7 +2,9 @@
 
 Get a full EKS + ArgoCD GitOps platform running in about 30 minutes.
 No prior knowledge of this repo is assumed — only AWS, Terraform, and
-kubectl basics.
+kubectl basics. Visual version with an architecture diagram and
+expected output for every command:
+[`docs/run-guide.md`](run-guide.md).
 
 ## Prerequisites
 

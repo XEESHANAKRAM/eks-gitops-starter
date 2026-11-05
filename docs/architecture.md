@@ -29,6 +29,9 @@ flowchart TB
     GHCR["GHCR image\n(demo-app:0.1.0)"] --> APP
 ```
 
+Visual version of this diagram:
+[`docs/screenshots/architecture.svg`](screenshots/architecture.svg).
+
 ## Components
 
 | Component | What it is | Where it lives |
