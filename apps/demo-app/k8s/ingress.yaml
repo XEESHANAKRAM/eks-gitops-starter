@@ -1,0 +1,24 @@
+# Exposes the demo app outside the cluster. Disabled by default because it
+# needs an ingress controller (e.g. AWS Load Balancer Controller or NGINX)
+# and a real domain. To use it:
+#   1. Install an ingress controller.
+#   2. Replace demo.example.com with your domain.
+#   3. Remove the `enabled: "false"` annotation, or apply this file directly.
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: demo-app
+  namespace: apps
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: demo.example.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: demo-app
+                port:
+                  number: 80
