@@ -54,7 +54,7 @@ curl http://localhost:8081/
 
 ## Cost
 
-Default setup (2× t3.medium, 1 NAT gateway) runs about **$175–190/month**
+Default setup (2× t3.medium, 1 NAT gateway) runs about **$180–195/month**
 in `us-east-1`. Full breakdown and ways to cut it:
 [`docs/cost.md`](docs/cost.md). Destroy everything with
 `./scripts/destroy.sh`.
