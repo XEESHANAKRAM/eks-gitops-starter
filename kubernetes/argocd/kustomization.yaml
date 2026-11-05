@@ -1,0 +1,9 @@
+# Applies the ArgoCD ApplicationSet (and the root Application).
+# ArgoCD itself is installed by Helm — see scripts/bootstrap.sh.
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: argocd
+resources:
+  - ../../namespaces.yaml
+  - applications/root.yaml
+  - applications/demo-appset.yaml

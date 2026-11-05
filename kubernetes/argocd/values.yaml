@@ -1,0 +1,25 @@
+# ArgoCD Helm values (chart: argo/argo-cd).
+# Install with: helm install argocd argo/argo-cd -n argocd -f kubernetes/argocd/values.yaml
+# Get the admin password with:
+#   kubectl -n argocd get secret argocd-initial-admin-secret \
+#     -o jsonpath="{.data.password}" | base64 -d
+server:
+  replicas: 1
+  # ClusterIP on purpose: reach the UI with `kubectl port-forward`.
+  # Set to LoadBalancer if you want a public URL (it costs money).
+  service:
+    type: ClusterIP
+
+controller:
+  replicas: 1
+
+repoServer:
+  replicas: 1
+
+# The built-in admin user is enough for a starter. Dex (SSO) stays off
+# until you wire up an identity provider.
+dex:
+  enabled: false
+
+redis:
+  enabled: true
