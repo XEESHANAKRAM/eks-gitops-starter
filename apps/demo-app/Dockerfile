@@ -1,6 +1,9 @@
 # syntax=docker/dockerfile:1
 FROM python:3.12-slim
 
+# Patch OS packages so the image ships without known HIGH vulnerabilities.
+RUN apt-get update && apt-get upgrade -y && rm -rf /var/lib/apt/lists/*
+
 WORKDIR /app
 
 # Install dependencies first so the layer is cached between code changes.
