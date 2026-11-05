@@ -9,6 +9,11 @@ kubernetes_version = "1.31"
 
 vpc_cidr = "10.0.0.0/16"
 
+# CIDR blocks allowed to reach the public EKS API endpoint.
+# Default is 0.0.0.0/0 (open) so the starter works out of the box.
+# Restrict to your IPs for production, e.g. ["203.0.113.10/32"].
+# cluster_endpoint_public_access_cidrs = ["0.0.0.0/0"]
+
 node_instance_types = ["t3.medium"]
 node_desired_size   = 2
 node_min_size       = 2

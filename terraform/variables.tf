@@ -28,6 +28,12 @@ variable "kubernetes_version" {
   default     = "1.31"
 }
 
+variable "cluster_endpoint_public_access_cidrs" {
+  description = "CIDR blocks allowed to reach the public EKS API endpoint. Default is open (0.0.0.0/0) so the starter works out of the box with kubectl; restrict to your IP ranges for production."
+  type        = list(string)
+  default     = ["0.0.0.0/0"]
+}
+
 variable "vpc_cidr" {
   description = "CIDR block for the VPC."
   type        = string

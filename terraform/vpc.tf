@@ -1,5 +1,11 @@
 # VPC with public and private subnets across 3 AZs.
 # Worker nodes live in private subnets; the load balancer lives in public subnets.
+#
+# Flow Logs are enabled (enable_flow_log = true, CloudWatch Logs destination,
+# log group + IAM role created by the module). tfsec cannot trace them: the
+# module passes the VPC id to aws_flow_log through local.vpc_id, a try()
+# expression, which tfsec's resolver does not follow.
+# tfsec:ignore:aws-ec2-require-vpc-flow-logs-for-all-vpcs
 module "vpc" {
   source  = "terraform-aws-modules/vpc/aws"
   version = "~> 5.0"
@@ -15,6 +21,9 @@ module "vpc" {
   single_nat_gateway   = var.single_nat_gateway
   enable_dns_hostnames = true
   enable_dns_support   = true
+
+  # VPC Flow Logs to CloudWatch Logs (tfsec check aws-ec2-require-vpc-flow-logs-for-all-vpcs).
+  enable_flow_log = true
 
   public_subnet_tags = {
     "kubernetes.io/role/elb" = "1"

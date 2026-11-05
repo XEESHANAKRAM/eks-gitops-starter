@@ -126,6 +126,11 @@ data "aws_iam_policy_document" "github_actions_assume" {
 
 # Read-only permissions: enough for `terraform plan` and the security scans.
 # Deliberately NOT enough for `terraform apply`.
+# These actions are read-only (Describe/Get/List). AWS does not support
+# resource-level permissions for ec2:Describe*, eks:Describe*/List* and
+# iam:Get*/List* — they require resource "*". The role is read-only and
+# only ever runs `terraform plan` in CI.
+# tfsec:ignore:aws-iam-no-policy-wildcards
 data "aws_iam_policy_document" "github_actions_ci_readonly" {
   statement {
     sid    = "ReadOnlyForTerraformPlan"
