@@ -1,0 +1,21 @@
+# Copy to terraform.tfvars and adjust. Never commit terraform.tfvars.
+#   cp terraform.tfvars.example terraform.tfvars
+
+project_name       = "eks-gitops-starter"
+cluster_name       = "eks-gitops-starter"
+environment        = "dev"
+aws_region         = "us-east-1"
+kubernetes_version = "1.31"
+
+vpc_cidr = "10.0.0.0/16"
+
+node_instance_types = ["t3.medium"]
+node_desired_size   = 2
+node_min_size       = 2
+node_max_size       = 3
+
+# One NAT gateway saves ~$32/month vs one per AZ. Set to false for production.
+single_nat_gateway = true
+
+# GitHub repository allowed to assume the CI role (owner/repo).
+github_repo = "XEESHANAKRAM/eks-gitops-starter"
