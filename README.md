@@ -21,6 +21,8 @@
 
 ## Architecture
 
+![eks-gitops-starter architecture](docs/screenshots/architecture.svg)
+
 ```mermaid
 flowchart TB
     GH["GitHub repo"] -->|terraform apply| AWS["AWS: VPC + EKS"]
@@ -30,6 +32,7 @@ flowchart TB
 ```
 
 Full diagram and design decisions: [`docs/architecture.md`](docs/architecture.md).
+Visual step-by-step run guide: [`docs/run-guide.md`](docs/run-guide.md).
 
 ## Quickstart
 
@@ -41,7 +44,9 @@ cp terraform/terraform.tfvars.example terraform/terraform.tfvars
 ```
 
 Takes ~30 minutes (mostly the EKS control plane). Step-by-step with
-expected output: [`docs/quickstart.md`](docs/quickstart.md).
+expected output: [`docs/quickstart.md`](docs/quickstart.md). Visual
+run guide with expected output for every step:
+[`docs/run-guide.md`](docs/run-guide.md).
 
 Then verify:
 
@@ -71,6 +76,7 @@ yourself: [`docs/security.md`](docs/security.md).
 | Guide | What it covers |
 | ----- | -------------- |
 | [`docs/quickstart.md`](docs/quickstart.md) | Install end to end, with expected results |
+| [`docs/run-guide.md`](docs/run-guide.md) | Visual how-to-run guide, expected output per step, real local demo run |
 | [`docs/architecture.md`](docs/architecture.md) | Diagram, components, design decisions |
 | [`docs/cost.md`](docs/cost.md) | Cost estimate and how to reduce it |
 | [`docs/security.md`](docs/security.md) | Security model and your responsibilities |
