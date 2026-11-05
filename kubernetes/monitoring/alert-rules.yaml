@@ -28,7 +28,9 @@ spec:
             severity: warning
           annotations:
             summary: "Demo app is receiving no HTTP traffic"
-            description: "No HTTP requests reached demo-app in the last 5 minutes. Check the ArgoCD sync status and the ServiceMonitor."
+            description: >-
+              No HTTP requests reached demo-app in the last 5 minutes.
+              Check the ArgoCD sync status and the ServiceMonitor.
 
         - alert: DemoAppHighLatency
           expr: histogram_quantile(0.95, sum by (le) (rate(demo_app_http_request_duration_seconds_bucket[5m]))) > 0.5
