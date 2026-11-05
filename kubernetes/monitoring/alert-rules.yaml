@@ -1,0 +1,61 @@
+# Alert rules picked up automatically by the Prometheus Operator
+# (ruleSelector is nil in the chart values, so all PrometheusRules apply).
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: eks-gitops-starter-alerts
+  namespace: monitoring
+  labels:
+    app: kube-prometheus-stack
+spec:
+  groups:
+    - name: demo-app
+      interval: 30s
+      rules:
+        - alert: DemoAppDown
+          expr: kube_deployment_status_replicas_available{deployment="demo-app", namespace="apps"} == 0
+          for: 1m
+          labels:
+            severity: critical
+          annotations:
+            summary: "Demo app has no available replicas"
+            description: "The demo-app deployment in namespace apps has 0 available replicas for more than 1 minute."
+
+        - alert: DemoAppNoTraffic
+          expr: sum(rate(demo_app_http_requests_total[5m])) == 0
+          for: 5m
+          labels:
+            severity: warning
+          annotations:
+            summary: "Demo app is receiving no HTTP traffic"
+            description: "No HTTP requests reached demo-app in the last 5 minutes. Check the ArgoCD sync status and the ServiceMonitor."
+
+        - alert: DemoAppHighLatency
+          expr: histogram_quantile(0.95, sum by (le) (rate(demo_app_http_request_duration_seconds_bucket[5m]))) > 0.5
+          for: 5m
+          labels:
+            severity: warning
+          annotations:
+            summary: "Demo app p95 latency above 500ms"
+            description: "The 95th percentile request latency for demo-app is above 0.5s."
+
+    - name: kubernetes
+      interval: 30s
+      rules:
+        - alert: PodCrashLooping
+          expr: rate(kube_pod_container_status_restarts_total[5m]) > 0
+          for: 5m
+          labels:
+            severity: warning
+          annotations:
+            summary: "Pod {{ $labels.pod }} is crash-looping"
+            description: "Pod {{ $labels.namespace }}/{{ $labels.pod }} restarted in the last 5 minutes."
+
+        - alert: PodNotReady
+          expr: kube_pod_status_ready{condition="true"} == 0
+          for: 5m
+          labels:
+            severity: warning
+          annotations:
+            summary: "Pod {{ $labels.pod }} is not ready"
+            description: "Pod {{ $labels.namespace }}/{{ $labels.pod }} has been not-ready for more than 5 minutes."

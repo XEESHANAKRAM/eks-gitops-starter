@@ -1,0 +1,10 @@
+# Applies the monitoring stack pieces that are plain manifests
+# (alert rules + Grafana dashboard). The kube-prometheus-stack itself
+# is installed by Helm — see scripts/bootstrap.sh.
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: monitoring
+resources:
+  - ../../namespaces.yaml
+  - alert-rules.yaml
+  - dashboard-configmap.yaml
