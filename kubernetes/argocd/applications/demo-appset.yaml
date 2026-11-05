@@ -1,0 +1,32 @@
+# ApplicationSet: one Application per entry in the list.
+# To ship a new app, add one element with its repo path — no new YAML files.
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: demo-apps
+  namespace: argocd
+spec:
+  generators:
+    - list:
+        elements:
+          - app: demo-app
+            path: apps/demo-app/k8s
+            namespace: apps
+  template:
+    metadata:
+      name: "{{app}}"
+    spec:
+      project: default
+      source:
+        repoURL: https://github.com/XEESHANAKRAM/eks-gitops-starter.git
+        targetRevision: HEAD
+        path: "{{path}}"
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: "{{namespace}}"
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+          - CreateNamespace=true

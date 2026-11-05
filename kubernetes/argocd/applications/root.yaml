@@ -1,0 +1,24 @@
+# Root Application (app-of-apps pattern).
+# Apply once with `kubectl apply -f kubernetes/argocd/applications/root.yaml`
+# and ArgoCD will manage everything in kubernetes/argocd/applications/ —
+# including the ApplicationSet that deploys the demo app.
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: apps
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/XEESHANAKRAM/eks-gitops-starter.git
+    targetRevision: HEAD
+    path: kubernetes/argocd/applications
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: argocd
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
