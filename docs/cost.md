@@ -13,8 +13,9 @@ commit.
 | 2× t3.medium nodes (on-demand) | ~$61 |
 | 1× NAT gateway + data processing | ~$32 + usage |
 | EBS volumes (nodes + Prometheus 10 Gi + Grafana 5 Gi) | ~$5–10 |
+| CloudWatch Logs (EKS control plane logs + VPC Flow Logs) | ~$2–5 |
 | LoadBalancer (only if you expose ArgoCD/Grafana publicly) | ~$16–20 each |
-| **Total, default** | **~$175–190 / month** |
+| **Total, default** | **~$180–195 / month** |
 
 ## How to spend less
 
